@@ -1,0 +1,4 @@
+SharpsandSeries由禁戒碎片+三王魂合成
+SharpsandStaff（魔法）：从天上召唤pro，密度比星辰之怒的pro低一些
+SharpsandBow（远程）：每射两发会投掷出一个高伤的SharpsandBomb（受重力影响，但不明显）
+Sharpsand巨剑（近战）：挥动射出一个pro，缓慢向前移动，接触地面或敌人会爆炸（范伤）

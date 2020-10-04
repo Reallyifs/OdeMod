@@ -1,0 +1,4 @@
+Forsted由寒霜核+三王魂合成
+ForstedKnifes（远程）：投掷五个pro1（较低伤害），持续三遍后投掷三个pro2（高伤）
+ForstedThorn（魔法）：射出邪恶Thorn类型的pro，无法穿墙但射程远且可以反弹
+ForstedSickle（近战）：挥动射出三个pro，会先飞行几格接着在原地转圈一秒，然后对准敌人飞去

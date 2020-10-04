@@ -1,0 +1,9 @@
+﻿author = Wan
+version = 0.0.0.1
+hideCode = true
+includePDB = false
+buildIgnore = .vs\*, bin\*, Libraries\*, obj\*, *.csproj, *.user, *.sln, *.rar, *.cpp, Ignores\*, Painter\*
+displayName = Ode Mod
+hideResources = true
+includeSource = false
+modReferences = StarlitRainbowCollection@1.0.0.8
