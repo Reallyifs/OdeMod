@@ -57,7 +57,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 Main.npc[id2].realLife = npc.whoAmI;
                 Main.npc[id2].ai[1] = id1;
                 Main.npc[id1].ai[0] = id2;
-                NetMessage.SendData(23, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
                 id1 = id2;
             }
         }

@@ -16,7 +16,9 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
         int state = 0;
         int[] states = new int[] { 0, 1, 2, 3, 4, 0, 2, 0, 4, 3, 2, 1, 4, 0 };
         NPC[] tails = new NPC[44];
-        public Player tPlayer { get { return Main.player[npc.target]; } }
+
+        public Player tPlayer => Main.player[npc.target];
+
         public virtual int proDamage
         {
             get
@@ -24,11 +26,13 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 return (int)(npc.damage / (Main.expertMode ? 2.5f : 1f));
             }
         }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Devil Worm");
             DisplayName.AddTranslation(GameCulture.Chinese, "寒霜魔虫");
         }
+
         public override void SetDefaults()
         {
             npc.width = 36;
@@ -48,6 +52,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             npc.SetElementDamage(5);
             npc.boss = true;
         }
+
         public override bool PreAI()
         {
             if (timer == 0)
@@ -56,6 +61,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             }
             return base.PreAI();
         }
+
         public override void AI()
         {
             timer++;
@@ -128,7 +134,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 Main.npc[id2].realLife = npc.whoAmI;
                 Main.npc[id2].ai[1] = id1;
                 Main.npc[id1].ai[0] = id2;
-                NetMessage.SendData(23, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
                 tails[i] = Main.npc[id2];
                 id1 = id2;
             }
