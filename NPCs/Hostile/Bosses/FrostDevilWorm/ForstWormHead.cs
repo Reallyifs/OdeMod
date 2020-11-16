@@ -9,12 +9,14 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
 {
     public class ForstWormHead : ModNPC
     {
-        bool spawned = false;
+        private bool spawned = false;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Worm");
             DisplayName.AddTranslation(GameCulture.Chinese, "寒霜蠕虫");
         }
+
         public override void SetDefaults()
         {
             npc.width = 18;
@@ -36,6 +38,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             npc.buffImmune[24] = true;
             npc.SetElementDamage(5);
         }
+
         public override void AI()
         {
             if (!spawned)
@@ -44,6 +47,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 spawned = true;
             }
         }
+
         private void Spawn(int startID)
         {
             npc.ai[3] = npc.whoAmI;
@@ -52,15 +56,16 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             for (int i = 0; i < 20; i++)
             {
                 int type = i < 19 ? ModContent.NPCType<ForstWormBody>() : ModContent.NPCType<ForstWormTail>();
-                int id2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
-                Main.npc[id2].ai[3] = npc.whoAmI;
-                Main.npc[id2].realLife = npc.whoAmI;
-                Main.npc[id2].ai[1] = id1;
-                Main.npc[id1].ai[0] = id2;
-                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
-                id1 = id2;
+                int SubID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
+                Main.npc[SubID].ai[3] = npc.whoAmI;
+                Main.npc[SubID].realLife = npc.whoAmI;
+                Main.npc[SubID].ai[1] = id1;
+                Main.npc[id1].ai[0] = SubID;
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, SubID, 0f, 0f, 0f, 0, 0, 0);
+                id1 = SubID;
             }
         }
+
         public override void HitEffect(int hitDirection, double damage)
         {
             for (int i = 0; i < 7; i++)

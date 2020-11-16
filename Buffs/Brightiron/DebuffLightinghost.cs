@@ -53,8 +53,9 @@ namespace OdeMod.Buffs.Brightiron
 
         public override bool ReApply(NPC npc, int time, int buffIndex)
         {
-            Lightstrong += 0.1f;
             Lightinghostes = true;
+            if (Lightstrong < 1)
+                Lightstrong += 0.1f;
             return true;
         }
     }

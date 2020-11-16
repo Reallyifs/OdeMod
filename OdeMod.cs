@@ -1,3 +1,5 @@
+using OdeMod.Events;
+using OdeMod.Items;
 using Terraria.ModLoader;
 
 namespace OdeMod
@@ -29,11 +31,16 @@ namespace OdeMod
         public override void Load()
         {
             OLanguage.Load();
+            EclipseOfChaos.Load();
         }
 
         public override void Unload()
         {
             OLanguage.Unload();
+            EclipseOfChaos.Unload();
         }
+
+        public override void AddRecipeGroups() => ORecipes.AddRecipeGroups();
+        public override void AddRecipes() => ORecipes.AddRecipes();
     }
 }

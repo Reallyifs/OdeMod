@@ -1,4 +1,5 @@
 ﻿using OdeMod.Items.Brightiron.Armor;
+using OdeMod.Projectiles.Brightiron;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

@@ -7,6 +7,14 @@ namespace OdeMod
 {
     public static class OFunctions
     {
+        public static bool IsAnyTower(this NPC npc)
+        {
+            return npc.type == NPCID.LunarTowerVortex
+                || npc.type == NPCID.LunarTowerStardust
+                || npc.type == NPCID.LunarTowerNebula
+                || npc.type == NPCID.LunarTowerSolar;
+        }
+
         public static void ToNewText(this string text, Color textColor, bool force = false)
         {
             if (Main.netMode == NetmodeID.SinglePlayer)

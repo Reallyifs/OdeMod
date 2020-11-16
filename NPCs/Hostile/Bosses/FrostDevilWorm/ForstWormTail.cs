@@ -13,6 +13,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             DisplayName.SetDefault("Forst Worm");
             DisplayName.AddTranslation(GameCulture.Chinese, "寒霜蠕虫");
         }
+
         public override void SetDefaults()
         {
             npc.width = 18;
@@ -35,6 +36,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             npc.buffImmune[24] = true;
             npc.SetElementDamage(5);
         }
+
         public override void AI()
         {
             if (!Main.npc[(int)npc.ai[1]].active)
@@ -44,6 +46,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 npc.active = false;
             }
         }
+
         public override void HitEffect(int hitDirection, double damage)
         {
             for (int i = 0; i < 7; i++)

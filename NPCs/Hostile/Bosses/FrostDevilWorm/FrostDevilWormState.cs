@@ -7,8 +7,8 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
 {
     public partial class FrostDevilWormHead : ModNPC
     {
-        int timer2 = 0;
-        Vector2 recordVector2 = default(Vector2);
+        private int timer2 = 0;
+        private Vector2 recordVector2 = default(Vector2);
 
         public void State0()
         {
@@ -19,17 +19,18 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             }
             if (timer2 >= 65 && timer2 <= 90)
             {
-                npc.Approach(tPlayer.Center, 0.4f);
+                npc.Approach(TPlayer.Center, 0.4f);
             }
             if (timer2 >= 95 && timer2 <= 110)
             {
-                if (npc.velocity.Length() > 5) npc.velocity *= 0.97f;
+                if (npc.velocity.Length() > 5)
+                    npc.velocity *= 0.97f;
             }
             if(timer2 == 150)
             {
-                if(tPlayer.Center.Y - npc.Center.Y > 300)
+                if(TPlayer.Center.Y - npc.Center.Y > 300)
                 {
-                    npc.ChangeVelocityTo(tPlayer.Center, 5);
+                    npc.ChangeVelocityTo(TPlayer.Center, 5);
                 }
             }
             if (timer2 == 180)
@@ -43,7 +44,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             timer2++;
             if (timer2 % 30 == 0)
             {
-                recordVector2 = tPlayer.Center;
+                recordVector2 = TPlayer.Center;
             }
             if(timer2 % 60 == 10)
             {
@@ -78,7 +79,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             timer2++;
             if (timer2 == 20)
             {
-                npc.ChangeVelocityTo(tPlayer.Center, 8);
+                npc.ChangeVelocityTo(TPlayer.Center, 8);
             }
             if (timer2 >= 60 && timer2 <= 75)
             {
@@ -99,11 +100,11 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             timer2++;
             if(timer2 % 100 == 30)
             {
-                npc.Approach(tPlayer.Center + Geometry.GetVector(timer2.ToRadian(), 450));
+                npc.Approach(TPlayer.Center + Geometry.GetVector(timer2.ToRadian(), 450));
             }
             if(timer2 == 370)
             {
-                Vector2 pos = Geometry.GetRandomPosInCircle(tPlayer.Center, 700);
+                Vector2 pos = Geometry.GetRandomPosInCircle(TPlayer.Center, 700);
                 NPC.NewNPC((int)pos.X, (int)pos.Y, mod.NPCType("ForstWormHead"));
             }
             if (timer2 == 400)
@@ -117,7 +118,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             timer2++;
             if (timer2 == 10)
             {
-                recordVector2 = tPlayer.Center;
+                recordVector2 = TPlayer.Center;
             }
             if (timer2 >= 30 && timer2 <= 100 && timer2 % 2 == 1)
             {

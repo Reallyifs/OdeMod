@@ -9,12 +9,15 @@ namespace OdeMod.Projectiles.Mosscobble
     public class ProMosscobbleAxe : ModProjectile
     {
         private int BackingTime;
+
         public override string Texture => "OdeMod/Items/Mosscobble/MosscobbleAxe";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mosscobble Axe");
             DisplayName.AddTranslation(GameCulture.Chinese, "苔石斧");
         }
+
         public override void SetDefaults()
         {
             projectile.melee = true;
@@ -33,23 +36,28 @@ namespace OdeMod.Projectiles.Mosscobble
         public override void AI()
         {
             projectile.rotation += 0.5f;
-            if (projectile.rotation >= 6.282f) { projectile.rotation = 0; }
+            if (projectile.rotation >= 6.282f)
+                projectile.rotation = 0;
             if (projectile.timeLeft >= 50 && projectile.timeLeft < 97)
             {
                 NPC tar = null;
                 float disMAX = 500;
                 foreach (NPC npc in Main.npc)
                 {
-                    if (npc.active && !npc.friendly && !npc.dontTakeDamage && Collision.CanHit(projectile.Center, 1, 1, npc.Center, 1, 1) &&
-                        npc.type != NPCID.LunarTowerVortex && npc.type != NPCID.LunarTowerStardust && npc.type != NPCID.LunarTowerNebula &&
-                        npc.type != NPCID.LunarTowerSolar && Vector2.Distance(npc.Center, projectile.Center) <= disMAX) { tar = npc; }
+                    if (npc.active
+                        && !npc.friendly
+                        && !npc.IsAnyTower()
+                        && Collision.CanHit(projectile.Center, 1, 1, npc.Center, 1, 1)
+                        && npc.CanBeChasedBy(projectile)
+                        && Vector2.Distance(npc.Center, projectile.Center) <= disMAX)
+                        tar = npc;
                 }
                 if (tar != null)
                 {
                     Vector2 tVEC = Vector2.Normalize(tar.Center - projectile.Center) * 10;
-                    float nFLOAT = 40f;
-                    if (nFLOAT > 0) { nFLOAT--; }
-                    projectile.velocity = (projectile.velocity * nFLOAT + tVEC) / (nFLOAT + 1);
+                    if (projectile.ai[0] > 0)
+                        projectile.ai[0]--;
+                    projectile.velocity = (projectile.velocity * projectile.ai[0] + tVEC) / (projectile.ai[0] + 1);
                 }
             }
             else if (projectile.timeLeft < 25)
@@ -62,9 +70,11 @@ namespace OdeMod.Projectiles.Mosscobble
                     projectile.timeLeft++;
                     projectile.velocity *= 2;
                 }
-                if (Vector2.Distance(player.Center, projectile.Center) <= player.width) { projectile.Kill(); }
+                if (Vector2.Distance(player.Center, projectile.Center) <= player.width)
+                    projectile.Kill();
             }
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (BackingTime <= 2)
@@ -83,7 +93,8 @@ namespace OdeMod.Projectiles.Mosscobble
             else
             {
                 projectile.tileCollide = false;
-                if (projectile.timeLeft > 30) { projectile.timeLeft = 25; }
+                if (projectile.timeLeft > 30)
+                    projectile.timeLeft = 25;
             }
             return false;
         }

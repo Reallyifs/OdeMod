@@ -41,7 +41,8 @@ namespace OdeMod.Buffs.Californium
                 if (Vector2.Distance(target.Center, npc.Center) <= 50 && target.active && !target.friendly && !vNPC[npc.whoAmI])
                 {
                     vNPC[target.whoAmI] = true;
-                    target.AddBuff(Type, buffIndex / 4);
+                    if (!target.HasBuff(ModContent.BuffType<DebuffRadiation>()))
+                        target.AddBuff(Type, buffIndex / 4);
                 }
             }
         }
@@ -66,7 +67,8 @@ namespace OdeMod.Buffs.Californium
                     !vPLAYER[player.whoAmI])
                 {
                     vPLAYER[target.whoAmI] = true;
-                    target.AddBuff(Type, buffIndex / 8);
+                    if (!target.HasBuff(ModContent.BuffType<DebuffRadiation>()))
+                        target.AddBuff(Type, buffIndex / 8);
                 }
             }
         }

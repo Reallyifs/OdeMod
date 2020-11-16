@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using OdeMod.Projectiles.Frosted;
 using StarlitRainbowCollection;
 using Terraria;
 using Terraria.ID;
@@ -60,7 +61,7 @@ namespace OdeMod.Items.Frosted
                     Vector2 tVECL = tVEC + new Vector2(-tVEC.Y * 0.375f, tVEC.X * 0.375f) * i;
                     tVECL.RotatedBy(Main.rand.NextDouble() * 0.05 * i);
                     Projectile.NewProjectile(player.Center, tVECL, ModContent.ProjectileType<ProFrostedLongcutter>(),
-                        (int)(item.damage * 1.7) + (int)(item.crit * 0.1), item.knockBack, player.whoAmI);
+                        (int)((item.damage * 1.7) + (item.crit * 0.1)), item.knockBack, player.whoAmI);
                 }
             }
             ThrownTime++;

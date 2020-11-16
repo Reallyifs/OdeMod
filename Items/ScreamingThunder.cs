@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace OdeMod.Items
 {
-    class ScreamingThunder : ModItem
+    public class ScreamingThunder : ModItem
     {
         public override void SetStaticDefaults()
         {

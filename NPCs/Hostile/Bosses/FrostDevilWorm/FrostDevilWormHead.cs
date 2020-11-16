@@ -11,21 +11,15 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
     [AutoloadBossHead]
     public partial class FrostDevilWormHead : ModNPC
     {
-        int timer = 0;
-        int counter = 0;
-        int state = 0;
-        int[] states = new int[] { 0, 1, 2, 3, 4, 0, 2, 0, 4, 3, 2, 1, 4, 0 };
-        NPC[] tails = new NPC[44];
+        private int state = 0;
+        private int timer = 0;
+        private int counter = 0;
+        private int[] states = new int[] { 0, 1, 2, 3, 4, 0, 2, 0, 4, 3, 2, 1, 4, 0 };
+        private NPC[] tails = new NPC[44];
 
-        public Player tPlayer => Main.player[npc.target];
+        public Player TPlayer => Main.player[npc.target];
 
-        public virtual int proDamage
-        {
-            get
-            {
-                return (int)(npc.damage / (Main.expertMode ? 2.5f : 1f));
-            }
-        }
+        public virtual int ProDamage => (int)(npc.damage / (Main.expertMode ? 2.5f : 1f));
 
         public override void SetStaticDefaults()
         {
@@ -68,7 +62,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             if (state == 0 && npc.life < npc.lifeMax / 2)
             {
                 states[(counter + 1) % states.Length] = 5;
-                npc.Approach(tPlayer.Center, 0.5f);
+                npc.Approach(TPlayer.Center, 0.5f);
                 npc.velocity *= 2;
                 Explode.DustExplodeEasy(npc.Center, 100, 30, 197, 1, 100, Color.White, 3f);
                 state++;
@@ -107,7 +101,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
         public void SetTailImmune(int target, int timer)
         {
             npc.immune[target] = Math.Max(npc.immune[target], timer);
-            for (int i = 0; i < 44; i++)
+            for (int i = 0; i < tails.Length; i++)
             {
                 tails[i].immune[target] = Math.Max(npc.immune[target], timer);
             }
@@ -120,23 +114,15 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             int id1 = startID;
             for (int i = 0; i < 44; i++)
             {
-                int type = 0;
-                if (i < 43)
-                {
-                    type = mod.NPCType("FrostDevilWormBody");
-                }
-                else
-                {
-                    type = mod.NPCType("FrostDevilWormTail");
-                }
-                int id2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
-                Main.npc[id2].ai[3] = npc.whoAmI;
-                Main.npc[id2].realLife = npc.whoAmI;
-                Main.npc[id2].ai[1] = id1;
-                Main.npc[id1].ai[0] = id2;
-                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, id2, 0f, 0f, 0f, 0, 0, 0);
-                tails[i] = Main.npc[id2];
-                id1 = id2;
+                int type = i < 43 ? ModContent.NPCType<FrostDevilWormBody>() : ModContent.NPCType<FrostDevilWormTail>();
+                int SubID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
+                Main.npc[SubID].ai[3] = npc.whoAmI;
+                Main.npc[SubID].realLife = npc.whoAmI;
+                Main.npc[SubID].ai[1] = id1;
+                Main.npc[id1].ai[0] = SubID;
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, NetworkText.Empty, SubID, 0f, 0f, 0f, 0, 0, 0);
+                tails[i] = Main.npc[SubID];
+                id1 = SubID;
             }
         }
 
@@ -153,7 +139,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
 
         public static Color MixColor(Color c1, float s1, Color c2, float s2)
         {
-            Vector4 v = (c1.ToVector4() * s1 + c2.ToVector4() * s2) / (s1 + s2);
+            Vector4 v = ((c1.ToVector4() * s1) + (c2.ToVector4() * s2)) / (s1 + s2);
             return new Color(v);
         }
 

@@ -14,6 +14,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             DisplayName.SetDefault("Frost Devil Worm");
             DisplayName.AddTranslation(GameCulture.Chinese, "寒霜魔虫");
         }
+
         public override void SetDefaults()
         {
             npc.width = 36;
@@ -37,6 +38,7 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
             npc.buffImmune[24] = true;
             npc.SetElementDamage(5);
         }
+
         public override void AI()
         {
             if (!Main.npc[(int)npc.ai[1]].active)
@@ -46,14 +48,17 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 npc.active = false;
             }
         }
+
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
             return false;
         }
+
         public override bool CheckActive()
         {
             return false;
         }
+
         public override void HitEffect(int hitDirection, double damage)
         {
             for (int i = 0; i < 14; i++)
@@ -62,11 +67,13 @@ namespace OdeMod.NPCs.Hostile.Bosses.FrostDevilWorm
                 Main.dust[id].noGravity = true;
             }
         }
+
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
             var head = (FrostDevilWormHead)Main.npc[npc.realLife].modNPC;
             head.SetTailImmune(projectile.owner, 5);
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Vector2 drawPos = npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY);

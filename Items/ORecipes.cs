@@ -2,26 +2,26 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using static OdeMod.OdeModFunctions;
-using static OdeMod.OdeModFunctions.ModRecipeFunctions;
 namespace OdeMod.Items
 {
-    public class OdeModRecipes
+    public static class ORecipes
     {
         public static void AddRecipes()
         {
             VanillaChange();
         }
+
         public static void AddRecipeGroups()
         {
-            RecipeGroup group = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Language.GetTextValue("ItemName.CrimtaneBar")}",
+            RecipeGroup.RegisterGroup("OdeMod:CrimtaneBar",
+                new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Language.GetTextValue("ItemName.CrimtaneBar")}",
                 new int[]
                 {
                     ItemID.DemoniteBar,
                     ItemID.CrimtaneBar
-                });
-            RecipeGroup.RegisterGroup("OdeMod:CrimtaneBar", group);
+                }));
         }
+
         private static void VanillaChange()
         {
             ModRecipe recipe;
@@ -40,5 +40,7 @@ namespace OdeMod.Items
             recipe.AddRecipe();
             #endregion
         }
+
+        private static ModRecipe GetOdeModRecipe() => new ModRecipe(OdeMod.Instance);
     }
 }

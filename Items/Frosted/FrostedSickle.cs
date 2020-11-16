@@ -1,4 +1,5 @@
-﻿using StarlitRainbowCollection;
+﻿using OdeMod.Projectiles.Frosted;
+using StarlitRainbowCollection;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

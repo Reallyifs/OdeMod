@@ -44,10 +44,10 @@ namespace OdeMod.Mounts.Californium
                 mountData.backTexture = null;
                 mountData.backTextureExtra = null;
 
-                mountData.frontTexture = mod.GetTexture("Mounts/Californium/MountSpeedingTramcar");
                 mountData.textureWidth = mountData.frontTexture.Width;
                 mountData.textureHeight = mountData.frontTexture.Height;
 
+                mountData.frontTexture = mod.GetTexture("Mounts/Californium/MountSpeedingTramcar");
                 mountData.frontTextureGlow = mod.GetTexture("Mounts/Californium/MountSpeedingTramcar");
                 mountData.frontTextureExtra = null;
             }
@@ -64,8 +64,10 @@ namespace OdeMod.Mounts.Californium
             player.statDefense += (int)(2f * (1f + (Math.Abs(player.velocity.X) / mountData.runSpeed * 4f)));
             foreach (NPC npc in Main.npc)
             {
-                if (npc.active && !npc.friendly && Collision.CanHit(player.Center, 1, 1, npc.Center, 1, 1) &&
-                    Vector2.Distance(player.Center, npc.Center) <= 100)
+                if (npc.active
+                    && !npc.friendly
+                    && Collision.CanHit(player.Center, 1, 1, npc.Center, 1, 1)
+                    && Vector2.Distance(player.Center, npc.Center) <= 100)
                     npc.AddBuff(ModContent.BuffType<DebuffRadiation>(), 30);
             }
         }

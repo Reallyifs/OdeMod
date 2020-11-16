@@ -42,10 +42,12 @@ namespace OdeMod.Items
             return new Vector2(1.0f, -0.8f);
         }
 
-        public void UseItemEffect(Player player)
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+            ref float knockBack)
         {
-            Projectile.NewProjectile(Main.mouseX + Main.screenPosition.X + +Main.rand.Next(20) - 10, Main.mouseY + Main.screenPosition.Y - 500,
-                Main.rand.Next(5), 10, 9, 18, 0, Main.myPlayer);
+            Projectile.NewProjectile(Main.mouseX + Main.screenPosition.X + Main.rand.Next(20) - 10, Main.mouseY + Main.screenPosition.Y - 500,
+                Main.rand.Next(5), 10, ProjectileID.Starfury, 18, 0, Main.myPlayer);
+            return false;
         }
 
         public override void AddRecipes()
@@ -54,7 +56,7 @@ namespace OdeMod.Items
             if (!OdeMod.Developer)
             {
                 Ode.AddIngredient(ItemID.ManaCrystal, 3);
-                //Ode.AddRecipeGroup("OdeMod:CrimtaneBar", 10);
+                Ode.AddRecipeGroup("OdeMod:CrimtaneBar", 10);
                 Ode.AddTile(TileID.Anvils);
             }
             Ode.SetResult(this);
